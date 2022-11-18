@@ -1,14 +1,12 @@
 package handler
 
 import (
-	"context"
-	"fmt"
 	"github.com/go-chi/chi"
 	"github.com/go-chi/render"
 	"gitlab.com/tunder-tunder/avito/bd"
-	"gitlab.com/tunder-tunder/avito/models"
+	_ "gitlab.com/tunder-tunder/avito/models"
 	"net/http"
-	"strconv"
+	_ "strconv"
 )
 
 var dbInstance bd.Database

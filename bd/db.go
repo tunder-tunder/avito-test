@@ -3,12 +3,12 @@ package bd
 import (
 	"database/sql"
 	"fmt"
-	//_ "github.com/lib/pq"
+	_ "github.com/lib/pq"
 	"log"
 )
 
 const (
-	HOST = "localhost"
+	HOST = "database"
 	PORT = 5432
 )
 

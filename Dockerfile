@@ -3,7 +3,7 @@ COPY go.mod go.sum /go/src/gitlab.com/tunder-tunder/avito/
 WORKDIR /go/src/gitlab.com/tunder-tunder/avito/
 RUN go mod download
 COPY . /go/src/gitlab.com/tunder-tunder/avito/
-RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o build/avitotest gitlab.com/idoko/avitotest
+RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o build/avito gitlab.com/tunder-tunder/avito
 
 FROM alpine
 RUN apk add --no-cache ca-certificates && update-ca-certificates

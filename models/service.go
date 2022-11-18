@@ -9,7 +9,7 @@ type Service struct {
 	ID           int    `json:"Service_id"`
 	ServiceName  string `json:"Service_Name"`
 	Price        int    `json:"Price"`
-	Availability bool   `json:"balance_id"`
+	Availability bool   `json:"availability"`
 }
 type ServiceList struct {
 	Services []Service `json:"services"`

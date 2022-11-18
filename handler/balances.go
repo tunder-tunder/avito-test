@@ -7,6 +7,7 @@ import (
 	"github.com/go-chi/render"
 	"gitlab.com/tunder-tunder/avito/bd"
 	"gitlab.com/tunder-tunder/avito/models"
+	"log"
 	"net/http"
 	"strconv"
 )
@@ -21,25 +22,17 @@ func balances(router chi.Router) {
 		//router.Post("/", initBalance)
 		router.Post("/", addBalance)
 		router.Get("/", getBalanceById)
-		router.Post("/", reserveBalance)
-		router.Post("/", payBalance)
+		router.Post("/reserve", reserveBalance)
+		router.Post("/pay", payBalance)
+	})
 
-	})
-	router.Route("/{balanceID}", func(router chi.Router) {
-		router.Delete("/", deleteBalance)
-	})
 }
 func BalanceContext(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		userId := chi.URLParam(r, "userId")
-		balanceId := chi.URLParam(r, "balanceId")
 
 		if userId == "" {
 			render.Render(w, r, ErrorRenderer(fmt.Errorf("user ID is required")))
-			return
-		}
-		if balanceId == "" {
-			render.Render(w, r, ErrorRenderer(fmt.Errorf("balance ID is required")))
 			return
 		}
 
@@ -48,16 +41,9 @@ func BalanceContext(next http.Handler) http.Handler {
 			render.Render(w, r, ErrorRenderer(fmt.Errorf("invalid user ID")))
 		}
 
-		id_balance, err := strconv.Atoi(balanceId)
-		if err != nil {
-			render.Render(w, r, ErrorRenderer(fmt.Errorf("invalid user ID")))
-		}
-
 		ctx_userId := context.WithValue(r.Context(), userIDKey, id_user)
 		next.ServeHTTP(w, r.WithContext(ctx_userId))
 
-		ctx_balanceId := context.WithValue(r.Context(), balanceIdKey, id_balance)
-		next.ServeHTTP(w, r.WithContext(ctx_balanceId))
 	})
 }
 
@@ -109,19 +95,6 @@ func getBalanceById(w http.ResponseWriter, r *http.Request) {
 	}
 	if err := render.Render(w, r, &item); err != nil {
 		render.Render(w, r, ServerErrorRenderer(err))
-		return
-	}
-}
-
-func deleteBalance(w http.ResponseWriter, r *http.Request) {
-	balanceId := r.Context().Value(balanceIdKey).(int)
-	err := dbInstance.DeleteBalance(balanceId)
-	if err != nil {
-		if err == bd.ErrNoMatch {
-			render.Render(w, r, ErrNotFound)
-		} else {
-			render.Render(w, r, ServerErrorRenderer(err))
-		}
 		return
 	}
 }

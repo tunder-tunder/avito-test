@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"fmt"
+	_ "github.com/lib/pq"
 	"gitlab.com/tunder-tunder/avito/bd"
 	"gitlab.com/tunder-tunder/avito/handler"
 	"log"
