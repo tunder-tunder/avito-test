@@ -1,10 +1,10 @@
-package avito
+package main
 
 import (
-	"avito/bd"
-	"avito/handler"
 	"context"
 	"fmt"
+	"gitlab.com/tunder-tunder/avito/bd"
+	"gitlab.com/tunder-tunder/avito/handler"
 	"log"
 	"net"
 	"net/http"

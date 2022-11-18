@@ -1,7 +1,7 @@
 package bd
 
 import (
-	"avito/models"
+	"gitlab.com/tunder-tunder/avito/models"
 	// TODO: import models correctly; solve issue with docker config
 	"database/sql"
 )
